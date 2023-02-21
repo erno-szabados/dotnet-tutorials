@@ -9,6 +9,10 @@ on:
       - devel
   workflow_dispatch:
 
+defaults:
+  run:
+    working-directory: contoso-ef-sqlite
+
 jobs:
   build:
     runs-on: ubuntu-latest
