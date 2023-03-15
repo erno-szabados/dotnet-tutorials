@@ -1,0 +1,37 @@
+@using RailRoad;
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Name</th>
+            <th scope="col">Category</th>
+            <th scope="col">Propulsion</th>
+            <th scope="col">Wagons</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var train in trains ?? new List<Train>())
+        {
+            @if (train.Engines.Count > 0)
+            {
+                var engine = train.Engines.First();
+                <tr>
+                    <th scope="row">@engine.SerialNumber</th>
+                    <td>@engine.Name</td>
+                    <td>@engine.Category</td>
+                    <td>@engine.Propulsion</td>
+                    <td>@train.Wagons.Count</td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+
+<Wagon />
+
+@code {
+    [CascadingParameter]
+    public List<Train>? trains { get; set; }
+
+}

@@ -1,0 +1,38 @@
+@using RailRoad;
+@using System.Linq;
+
+<h2>Wagons</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Wagon</th>
+            <th scope="col">Category</th>
+            <th scope="col">WheelSets</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var wagonData in 
+            trains.SelectMany(t => t.Wagons)
+            .GroupBy(w => (Category: w.WagonCategory, Name: w.Name, WheelSets: w.WheelSets))
+            .Select(g => (
+                Wagon: g.Key,
+                Count: g.Count()
+            )))
+        {
+            <tr>
+                <td>@wagonData.Count</td>
+                <td>@wagonData.Wagon.Name</td>
+                <td>@wagonData.Wagon.Category</td>
+                <td>@wagonData.Wagon.WheelSets</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@code {
+    [CascadingParameter]
+    public List<Train> trains { get; set; } = default!;
+}
+
